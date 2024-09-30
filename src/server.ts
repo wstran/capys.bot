@@ -61,20 +61,20 @@ bot.command('invite', async (ctx) => {
         const db = await dbInstance.getDb();
         const userCollection = db.collection('users');
 
-        const user = await userCollection.findOne({ tele_id: userId }, { projection: { _id: 0, invite_code: 1 } });
+        const user = await userCollection.findOne({ tele_id: userId }, { projection: { _id: 0, referral_code: 1 } });
 
         let inviteMessage: string;
         let operationMenu: Markup.Markup<InlineKeyboardMarkup> | undefined;
 
-        if (user?.invite_code) {
+        if (user?.referral_code) {
             inviteMessage = `Here’s your exclusive invite link to the CAPYS Universe:
 
-<code>https://t.me/CapiyerBot?start=${user.invite_code}</code>
+<code>https://t.me/CapiyerBot?start=${user.referral_code}</code>
 
 Invite friends, spread the capy love, and earn $CAPYS and $TON for each successful referral. 🦫💸`;
 
             operationMenu = Markup.inlineKeyboard([
-                [Markup.button.url('Share the Capy Link 🦫', `https://t.me/share/url?url=https://t.me/CapiyerBot?start=${user.invite_code}&text=Join%20my%20capy%20adventure%20now!`)],
+                [Markup.button.url('Share the Capy Link 🦫', `https://t.me/share/url?url=https://t.me/CapiyerBot?start=${user.referral_code}&text=Join%20my%20capy%20adventure%20now!`)],
             ]);
         } else {
             inviteMessage = `Get started here first: https://t.me/CapiyerBot/play`;
