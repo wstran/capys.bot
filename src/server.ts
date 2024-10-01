@@ -87,6 +87,25 @@ Invite friends, spread the capy love, and earn $CAPYS and $TON for each successf
     };
 });
 
+
+bot.command('admin_user', async (ctx) => {
+    if (ctx.chat?.type === 'private') {
+        const userId = ctx.from?.id.toString();
+
+        if (userId !== '1853181392') return;
+
+        const dbInstance = Database.getInstance();
+        const db = await dbInstance.getDb();
+        const userCollection = db.collection('users');
+
+        const total_users = await userCollection.countDocuments();
+
+        const inviteMessage = `Total Users: ${total_users}`;
+
+        ctx.reply(inviteMessage, { parse_mode: "HTML" });
+    };
+});
+
 bot.launch(() => {
     console.log('CAPYS Bot is live! 🦫🚀');
 });
